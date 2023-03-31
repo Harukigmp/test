@@ -1,0 +1,38 @@
+function farm(id)
+local remote = game["ReplicatedStorage"]["Common"]["EventManager"]["StartFarm"]
+local args = {
+    [1] = id,
+    [2] = true
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Common"):WaitForChild("EventManager"):WaitForChild("StartFarm"):InvokeServer(unpack(args))
+end
+while true do
+print("start")
+lowest = 1000000000000
+id2 = 0
+for i,v in pairs(workspace.FarmEntities:GetChildren()) do
+if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.base.Position).magnitude < lowest then
+lowest = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.base.Position).magnitude
+id2 = v.Name
+end
+end
+print(id2)
+farm(id2)
+Instance.new("SelectionBox",workspace.FarmEntities[id2]).Adornee = workspace.FarmEntities[id2].Model
+
+
+
+   pos = string.find(workspace.FarmEntities[id2].Data.Debug.Value,"/") 
+number = string.sub(workspace.FarmEntities[id2].Data.Debug.Value,1,pos-1)
+on = string.sub(workspace.FarmEntities[id2].Data.Debug.Value,pos+1,string.len(workspace.FarmEntities[id2].Data.Debug.Value))
+while number ~= on and workspace.FarmEntities:FindFirstChild(id2) do
+pos = string.find(workspace.FarmEntities[id2].Data.Debug.Value,"/") 
+number = string.sub(workspace.FarmEntities[id2].Data.Debug.Value,1,pos-1)
+on = string.sub(workspace.FarmEntities[id2].Data.Debug.Value,pos+1,string.len(workspace.FarmEntities[id2].Data.Debug.Value))
+wait(0.01)
+print("loop")
+end
+
+print("ree") 
+end
